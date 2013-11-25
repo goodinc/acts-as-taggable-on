@@ -336,6 +336,7 @@ module ActsAsTaggableOn::Taggable
 
           # Destroy old taggings:
           if old_taggings.present?
+            old_taggings.each {|tagging| tagging.run_callbacks(:destroy)}
             ActsAsTaggableOn::Tagging.delete_all "#{ActsAsTaggableOn::Tagging.primary_key}".to_sym => old_taggings.map(&:id)
           end
 
